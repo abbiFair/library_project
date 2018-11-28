@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Profile Page</title>
+<link rel="stylesheet" type="text/css" href="css/example.css" />
+
+</head>
+<body>
+
+<form action="greeting">
+
+<table class="prettytable">
+
+<tr> 
+<td> First name: </td>
+<td> <input type="text" name="firstname"/> </td>
+</tr>
+
+<tr> 
+<td> Last name: </td>
+<td> <input type="text" name="lastname"/> </td>
+</tr>
+
+<tr>
+<td> Gender: </td>
+<td> <select name="Gender">
+  <option value="Male">Male</option>
+  <option value="Female">Female</option> </td>
+</select>
+</tr>
+
+<tr> 
+<td> Date of Birth: </td>
+<td> <input type="date" id="birth" name="date of birth"
+       min="1900-01-01" max="2018-12-31"> </td>
+</tr>
+
+<tr> 
+<td> Promotional Communication Preferences: </td>
+<td> 
+  <input type="radio" name="promo" value="Yes" checked> Yes &nbsp;
+  <input type="radio" name="promo" value="No"> No &nbsp;
+ </td>
+</tr>
+
+<tr> 
+<td> How would you like to receive promotional communications from us? </td>
+<td> 
+  <input type="checkbox" name="promo" value="Email"> Email &nbsp;
+  <input type="checkbox" name="promo" value="Phone"> Phone &nbsp;
+  <input type="checkbox" name="promo" value="Surface Mail"> Surface Mail &nbsp;
+ </td>
+</tr>
+
+<tr> 
+<td> <input type="submit" value="Submit">
+</td>
+<td> 
+<input type="reset" value="Reset">
+ </td>
+</tr>
+ 
+</table>
+</form>
+
+</body>
+</html>

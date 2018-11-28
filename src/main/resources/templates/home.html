@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p th:text="'Hello, ' + ${name} + '!'" />
+    
+	<form action="viewbooks">
+
+	<table class="prettytable">
+
+	<tr> 
+		<td> <input type="submit" value="View Books">
+	</td>
+	<td> 
+		<input type="submit" value="Check Out Books">
+ 	</td>
+	</tr>
+ 
+</table>
+</form>
+    
+</body>
+</html>
