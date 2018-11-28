@@ -26,6 +26,9 @@ public class Borrower {
 		this.phone = phone;
 		this.password = password;
 	}
+	public Borrower() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getCardno() {
 		return cardno;
 	}
@@ -49,6 +52,12 @@ public class Borrower {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	@Override
 	public String toString() {

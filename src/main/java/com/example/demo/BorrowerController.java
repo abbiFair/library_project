@@ -19,18 +19,35 @@ public class BorrowerController {
 	@Autowired
 	BorrowerService borrowerService;
 
-    @GetMapping("/borrowers")
-    public String getBorrowers(Model model) {
+    @GetMapping("/validateLogin/{cardno}{password}")
+    public String validateLogin(@PathVariable String cardno, @PathVariable String password, @ModelAttribute Borrower borrower, Model model) {
+    	
     	List<Borrower> borList = new ArrayList<Borrower>();
     	borList = borrowerService.getBorList();
+    	Borrower bor = new Borrower();
+		for(Borrower b : borList){
+			if(b.getCardno().equals(cardno) && b.getPassword().equals(password)){
+				bor = b;
+			}
+		}
+		
         model.addAttribute("borList", borList);
-        return "borLanding";
+        return "bor";
     }
     
-    @GetMapping("/addBorrower")
-    public String addBorrower(@PathVariable String password, @ModelAttribute Borrower borrower, Model model) {
-    	//empList = employeeService.getEmpList();
-        model.addAttribute("borrower", borrower);
+    @GetMapping("/addBorrower/{name}{phone}{address}{password}")
+    public String addBorrower(@PathVariable String name, @PathVariable String phone, @PathVariable String address, 
+    		@PathVariable String password, @ModelAttribute Borrower borrower, Model model) {
+    	
+    	Borrower bor = new Borrower();
+    	bor.setName(name);
+    	bor.setPhone(phone);
+    	bor.setAddress(address);
+    	bor.setPassword(password);
+    	//TO DO Set Card Number
+    	
+    	borrowerService.insertBorrower(bor);    	
+        model.addAttribute("borrower", bor);
         return "addBorrower";
     }
 

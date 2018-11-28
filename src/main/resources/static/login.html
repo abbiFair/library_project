@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Login Page</title>
-<link rel="stylesheet" type="text/css" href="css/example.css" />
-
+	<title>Login Page</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/example.css" />
 </head>
-<body>
-<br/>
 
 <form action="home" method="GET">
 
-<table class="prettytable">
-
-<table>
+<body>
+	<table class="prettytable">
+	<table>
 	<tr> 
 		<td> Card Number: </td>
 		<td> <input type="text" name="cardno" required/> </td>
@@ -26,15 +23,15 @@
 
 	<tr> 
 		<td> <input type="submit" value="Login"> </td>
+		<td> <input type="reset" value="Reset"> </td>
 	</tr>
+
 	
 	<tr> 
 		<td><p><a href="register">New Borrower? Register Here</a></p></td>
  	</tr>
  
 </table>
-
 </form>
-
 </body>
 </html>
