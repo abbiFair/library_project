@@ -2,37 +2,57 @@ package com.example.demo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.domain.Borrower;
 import com.example.demo.service.BorrowerService;
 
 @Controller
-public class BorrowerController {
+public class LibraryController {
 	
 	@Autowired
 	BorrowerService borrowerService;
 
-    @GetMapping("/validateLogin/{cardno}{password}")
-    public String validateLogin(@PathVariable String cardno, @PathVariable String password, @ModelAttribute Borrower borrower, Model model) {
+    @GetMapping("/home")
+    public String home(@RequestParam("cardno") String cardno, 
+    		@RequestParam("password") String password, Model model) {
+        return "home";
+    }
+    
+    
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
+    
+	
+    @RequestMapping(value = "/validateLogin", method = RequestMethod.POST)
+    public String validateLogin(HttpServletRequest request, Model model) {
     	
-    	List<Borrower> borList = new ArrayList<Borrower>();
-    	borList = borrowerService.getBorList();
+    	String cardno = request.getParameter("cardno");
+    	String password = request.getParameter("password");
+    	
     	Borrower bor = new Borrower();
-		for(Borrower b : borList){
-			if(b.getCardno().equals(cardno) && b.getPassword().equals(password)){
-				bor = b;
-			}
+    	bor = borrowerService.getBorrower(cardno);
+    	
+    	if(bor == null){
+    		return "login";
+    	}
+    	
+		if(bor.getPassword().equals(password)){
+			return "home";
 		}
-		
-        model.addAttribute("borList", borList);
-        return "bor";
+		return "login";
     }
     
     @GetMapping("/addBorrower/{name}{phone}{address}{password}")

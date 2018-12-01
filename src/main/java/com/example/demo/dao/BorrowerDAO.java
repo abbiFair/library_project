@@ -34,6 +34,13 @@ public class BorrowerDAO {
 
 
 	public void insertBorrower(Borrower borrower) {
+		borrowerMapper.insertBorrower(borrower);
+	}
+
+	public Borrower getBorrower(String cardno) {
+		Borrower bor = new Borrower();
+		bor = borrowerMapper.getBorrower(cardno);
+		return bor;
 	}
 	
 }

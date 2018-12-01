@@ -31,9 +31,11 @@ public class BorrowerService {
 	}
 	
 	public void insertBorrower(Borrower borrower) {
-		BorrowerDAO borDAO = new BorrowerDAO();
 		borDAO.insertBorrower(borrower);
+	}
 
+	public Borrower getBorrower(String cardno) {
+		return borDAO.getBorrower(cardno);
 	}
 
 }

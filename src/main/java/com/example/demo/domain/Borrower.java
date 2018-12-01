@@ -1,7 +1,5 @@
 package com.example.demo.domain;
 
-import java.math.BigDecimal;
-
 public class Borrower {
 	private String cardno;
 	private String name;

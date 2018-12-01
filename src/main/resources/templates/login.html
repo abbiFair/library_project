@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Login Page</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/example.css" />
+</head>
+
+<body>
+	<h1>Library Login</h1>
+	<form action="/validateLogin" method="POST">
+		<table class="prettytable">
+			<tr> 
+				<td> Card Number: </td>
+				<td> <input type="text" name="cardno" required/> </td>
+			</tr>
+
+			<tr> 
+				<td> Password: </td>
+				<td> <input type="text" name="password" required/> </td>
+			</tr>
+
+			<tr> 
+				<td> <input type="submit" value="Login"> </td>
+				<td> <input type="reset" value="Reset"> </td>
+			</tr>
+
+			<tr> 
+				<td><p><a href="register.html">New Borrower? Register Here</a></p></td>
+ 			</tr>
+ 
+		</table>
+	</form>
+</body>
+</html>
