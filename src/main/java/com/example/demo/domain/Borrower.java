@@ -1,11 +1,14 @@
 package com.example.demo.domain;
 
+import java.util.List;
+
 public class Borrower {
 	private String cardno;
 	private String name;
 	private String address;
 	private String phone;
 	private String password;
+	private List<Book> books;
 	
 	
 	
@@ -56,6 +59,12 @@ public class Borrower {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public List<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 	@Override
 	public String toString() {
