@@ -1,6 +1,7 @@
 package com.example.demo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,10 +46,21 @@ public class LibraryController {
     }
     
     @RequestMapping(value = "/newBorrower", method = RequestMethod.POST)
-    public String newBorrower(HttpServletRequest request, Model model) {
+    public String newBorrower(HttpServletRequest request, @RequestParam(name="errormsg", 
+    required=false, defaultValue="") String errormsg, Model model) {
+    	
 		String name = request.getParameter("name");
 		String address = request.getParameter("address");
 		String phone = request.getParameter("phone");
+		if(phone.matches("[0-9]+") && phone.length() == 10) {
+			//phone number is in correct format
+		}
+		else {
+			//phone number is not in correct format
+			errormsg = "Enter phone number as a 10 digit number";
+			model.addAttribute("errormsg", errormsg);
+			return "register";
+		}
 		String password = request.getParameter("password");
 		
     	Borrower bor = new Borrower();
@@ -86,7 +98,8 @@ public class LibraryController {
 	
     @RequestMapping(value = "/validateLogin", method = RequestMethod.POST)
     public String validateLogin(HttpServletRequest request, 
-    		@RequestParam(name="errormsg", required=false, defaultValue="Invalid Login") String errormsg, Model model) {
+    		@RequestParam(name="errormsg", required=false, defaultValue="") String errormsg, Model model) {
+    	
     	
     	String cardno = request.getParameter("cardno");
     	String password = request.getParameter("password");
@@ -95,6 +108,7 @@ public class LibraryController {
     	bor = borrowerService.getBorrower(cardno);
     	
     	if(bor == null){
+    		errormsg = "Invalid Card Number";
     		model.addAttribute("errormsg", errormsg);
     		return "login";
     	}
@@ -103,6 +117,7 @@ public class LibraryController {
 			return "home";
 		}
 		
+		errormsg = "Invalid Card Number Password Combination";
 		model.addAttribute("errormsg", errormsg);
 		return "login";
     }
