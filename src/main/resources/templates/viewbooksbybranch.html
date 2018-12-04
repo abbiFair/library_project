@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Books</title>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/example.css" />
+</head>
+<body>
+    <h1>View Books</h1>
+    
+    <form action="/updatebooklist" method="post" th:object="${branch}">
+	    <table>
+		    <tr>
+			    <td>Library Branch: </td>
+			    <td>
+			    	<select th:field="*{branchid}">
+			    		<option value="0">Select Branch</option>
+			    		<option th:each="brancheach: ${allBranches}" th:value="${brancheach.branchid}" th:text="${brancheach.branchname}"></option>
+			    	</select>
+			    </td>
+			    <td><input type="submit" value="Update List"></td>
+		    </tr>
+		</table>
+	</form>
+
+    <form th:action="@{/checkout(branch=${branch.branchid},borrower=${borrower.cardno})}" method="post" th:object="${borrower}">
+	    <table class = "prettytable">
+		    <tr>
+			    <th>Title</th>
+			    <th>Publisher</th>
+			    <th>Number Available</th>
+			    <th>Check Out</th>
+		    </tr>
+		    
+		    <tr th:each="book: ${bookList}">
+		        <td th:text="${book.title}" />
+		        <td th:text="${book.publisher}" />
+		        <td th:text="${book.numberavailable}" />
+		        <td>
+		        	<input type="checkbox" th:field="*{books}" th:value="${book.bookid}">
+	        	</td>
+		    </tr>
+		    <tr>
+		    	<td><input type="submit" value="Submit"> <input type="reset" value="Reset"></td>
+	    	</tr>
+	    </table>
+    </form>
+</body>
+</html>

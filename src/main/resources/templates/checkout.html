@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Check Out</title>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/example.css" />
+</head>
+<body>
+    <h1>Check Out Books</h1>
+    
+    <table>
+	    <tr>
+		    <td><p th:text="'The following books are being checked out for customer: ' + ${borrower.cardno} + '!'" /></td>
+	    </tr>
+    </table>
+
+    <form th:action="@{/confirmcheckout(branch=${branch.branchid},borrower=${borrower.cardno})}" method="post" th:object="${checkoutbooks}">
+	    <table class = "prettytable">
+		    <tr>
+			    <th>Title</th>
+			    <th>Publisher</th>
+			    <th>Library Branch</th>
+		    </tr>
+		    
+		    <tr th:each="book: ${checkoutbooks}">
+		        <td th:text="${book.title}" />
+		        <td th:text="${book.publisher}" />
+		        <td th:text="${branch.branchname}" />
+		    </tr>
+	    </table>
+	    
+	    <table>
+		    <tr>
+		    	<td><input type="submit" value="Confirm"></td>
+		    	<td><button type="submit" formaction="/viewbooks">Cancel</button></td>
+	    	</tr>
+    	</table>
+    </form>
+</body>
+</html>

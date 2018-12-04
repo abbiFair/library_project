@@ -14,7 +14,6 @@ public class LibraryBranchConverter implements Converter<String, LibraryBranch> 
 	
 	@Override
 	public LibraryBranch convert(String branchid) {
-		System.out.println("Trying to convert id=" + branchid + " into a branch");
 		LibraryBranch branch = new LibraryBranch();
 		branch.setBranchid(branchid);
 		branch = librarybranchservice.getBranch(branch);

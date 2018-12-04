@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -23,10 +24,27 @@ public interface BookMapper {
 	@Select("select bookid, title, publisher from book where bookid = #{bookid}")
 	Book getBook(Book book);
 	
-	@Select("select b.bookid, b.title, b.publisher, t1.numberavailable\r\n" + 
-			"from book b,(select bc.bookid, bc.branchid,bc.no_of_copies numberavailable\r\n" + 
+//	@Select("select b.bookid, b.title, b.publisher, t1.numberavailable\r\n" + 
+//			"from book b,(select bc.bookid, bc.branchid,bc.no_of_copies numberavailable\r\n" + 
+//			"             from book_copies bc\r\n" + 
+//			"             where bc.branchid = #{branchid}) t1\r\n" + 
+//			"where b.bookid = t1.bookid")
+//	List<Book> getBookListByBranch(LibraryBranch branch);
+	
+	@Select("select t2.bookid, t2.title, t2.publisher, (t2.navailable - coalesce(t3.count1,0)) numberavailable\r\n" + 
+			"from\r\n" + 
+			"(select b.bookid, b.title, b.publisher, t1.available navailable\r\n" + 
+			"from book b,(select bc.bookid, bc.branchid,bc.no_of_copies available\r\n" + 
 			"             from book_copies bc\r\n" + 
 			"             where bc.branchid = #{branchid}) t1\r\n" + 
-			"where b.bookid = t1.bookid")
+			"where b.bookid = t1.bookid) t2 \r\n" + 
+			"left join\r\n" + 
+			"(select bl.bookid, count(bl.bookid) count1\r\n" + 
+			"from book_loans bl\r\n" + 
+			"where bl.datein is null and bl.branchid = #{branchid}\r\n" + 
+			"group by bl.bookid) t3 on t2.bookid = t3.bookid")
 	List<Book> getBookListByBranch(LibraryBranch branch);
+
+	@Insert("insert into book_loans values (${bookid},${branchid},${cardno},sysdate,add_months(sysdate,1),null, null)")
+	void insertBookLoan(BookLoan bookloan);
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.dao.BookDAO;
 import com.example.demo.domain.Book;
+import com.example.demo.domain.BookLoan;
+import com.example.demo.domain.Borrower;
 import com.example.demo.domain.LibraryBranch;
 
 @Component
@@ -33,5 +35,9 @@ public class BookService {
 		List<Book> bookList = new ArrayList<Book>();
 		bookList = bookDAO.getBookListByBranch(branch);
 		return bookList;
+	}
+
+	public void insertBookLoan(BookLoan bookloan) {
+		bookDAO.insertBookLoan(bookloan);
 	}
 }
