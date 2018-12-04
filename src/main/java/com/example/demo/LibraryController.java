@@ -71,7 +71,7 @@ public class LibraryController {
     	
     	String newCardNo_String;
     	newCardNo_String = newCardNo_Int.toString();
-    	bor.setCardno(newCardNo_String);
+    	bor.setCardno(newCardNo_String);    	
     	borrowerService.insertBorrower(bor);
 		
 		return "home";

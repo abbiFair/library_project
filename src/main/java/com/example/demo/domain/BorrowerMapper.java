@@ -11,8 +11,9 @@ public interface BorrowerMapper {
 	@Select("SELECT cardno, name, address, phone, password FROM BORROWER")
 	List<Borrower> getBorList();
 
-	@Insert("insert into borrower .... ")
-	void insertBorrower(Borrower borrower);
+	@Insert("INSERT into BORROWER (cardno, name, address, phone, password) "
+			+ "VALUES(#{cardno}, #{name}, #{address}, #{phone}, #{password})")
+	void insertBorrower(String name, String address, String phone, String password, String cardno);
 
 	@Select("SELECT * FROM BORROWER WHERE cardno =#{cardno}")
 	Borrower getBorrower(String cardno);

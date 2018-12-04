@@ -34,7 +34,8 @@ public class BorrowerDAO {
 
 
 	public void insertBorrower(Borrower borrower) {
-		borrowerMapper.insertBorrower(borrower);
+		borrowerMapper.insertBorrower(borrower.getName(), borrower.getAddress(), 
+				borrower.getPhone(), borrower.getPassword(), borrower.getCardno());
 	}
 
 	public Borrower getBorrower(String cardno) {
