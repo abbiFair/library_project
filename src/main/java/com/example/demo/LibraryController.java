@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.domain.Book;
 import com.example.demo.domain.BookLoan;
@@ -38,14 +39,50 @@ public class LibraryController {
 	LibraryBranchService libraryBranchService;
 	
     @GetMapping("/home")
-    public String home(@RequestParam("cardno") String cardno, 
-    		@RequestParam("password") String password, Model model) {
+    public String home(@SessionAttribute("borrower") Borrower borrower, Model model) {
+    	Borrower bor = new Borrower();
+    	bor = borrower;
+    	model.addAttribute("borrower", bor);
         return "home";
     }
     
     @GetMapping("/register")
-    public String home( Model model) {
+    public String register( Model model) {
         return "register";
+    }
+    
+    @GetMapping("/editBorrower")
+    public String editBorrower( Model model) {
+        return "editBorrower";
+    }
+    
+    
+    @RequestMapping(value = "/updateBorrower", method = RequestMethod.POST)
+    public String editBorrower(HttpServletRequest request, @RequestParam(name="errormsg", 
+    required=false, defaultValue="") String errormsg, Model model) {
+    	
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String phone = request.getParameter("phone");
+		if(phone.matches("[0-9]+") && phone.length() == 10) {
+			//phone number is in correct format
+		}
+		else {
+			//phone number is not in correct format
+			errormsg = "Enter phone number as a 10 digit number";
+			model.addAttribute("errormsg", errormsg);
+			return "editBorrower";
+		}
+		String password = request.getParameter("password");
+		
+    	Borrower bor = new Borrower();
+    	bor.setName(name);
+    	bor.setPhone(phone);
+    	bor.setAddress(address);
+    	bor.setPassword(password);    	
+    	borrowerService.updateBorrower(bor);
+		
+		return "home";
     }
     
     @RequestMapping(value = "/newBorrower", method = RequestMethod.POST)
@@ -100,7 +137,7 @@ public class LibraryController {
     
 	
     @RequestMapping(value = "/validateLogin", method = RequestMethod.POST)
-    public String validateLogin(HttpServletRequest request, 
+    public String validateLogin(HttpServletRequest request, HttpSession session,
     		@RequestParam(name="errormsg", required=false, defaultValue="") String errormsg, Model model) {
     	
     	
@@ -117,6 +154,8 @@ public class LibraryController {
     	}
     	
 		if(bor.getPassword().equals(password)){
+			session.setAttribute("borrower", bor);
+			model.addAttribute("borrower", bor);
 			return "home";
 		}
 		
