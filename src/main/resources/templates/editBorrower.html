@@ -1,47 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Register</title>
 <link rel="stylesheet" type="text/css" href="css/example.css" />
 
 </head>
 <body>
 <h1>Register a new borrower:</h1>
-<form action="updateBorrower" method="POST">
+<form th:action = "@{/updateBorrower}" th:object="${borrower}" method="post">
 
 <table class="prettytable">
-
+<p th:text="${errormsg}"/>
 <tr> 
 <td> Name: </td>
-<td> <input type="text" name="name"/> </td>
-<td> <input type="submit" value="Update Name"></td>
+<td> <input type="text" th:field="*{name}" th:value="${borrower.name}"/> </td>
 </tr>
 
 <tr> 
 <td> Address: </td>
-<td> <input type="text" name="address"/> </td>
-<td> <input type="submit" value="Update Address"></td>
+<td> <input type="text" th:field="*{address}" th:value="${borrower.address}"/> </td>
 </tr>
 
 <tr> 
 <td> Phone Number: </td>
-<td> <input type="text" name="phone"/> </td>
-<td> <input type="submit" value="Update Phone"></td>
+<td> <input type="text" th:field="*{phone}" value="${borrower.phone}"/> </td>
 </tr>
 
 <tr> 
 <td> Password: </td>
-<td> <input type="text" name="password"/> </td>
-<td> <input type="submit" value="Update Password"></td>
+<td> <input type="text" th:field="*{password}" value="${borrower.password}"/> </td>
+
+</tr>
+
+<tr>
+<td> <input type="submit" value="Update"></td>
+<td><input type="reset" value="Reset"></td>
 </tr>
 
 <tr>
 <td><p><a href="home">Go Back to Home</a></p></td>
-<td><input type="reset" value="Reset"></td>
 </tr>
-
-
  
 </table>
 </form>

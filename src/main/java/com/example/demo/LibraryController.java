@@ -52,19 +52,30 @@ public class LibraryController {
     }
     
     @GetMapping("/editBorrower")
-    public String editBorrower( Model model) {
+    public String editBorrower(@RequestParam(name="errormsg", required=false, defaultValue="") String errormsg, 
+    		@SessionAttribute("borrower") Borrower borrower, Model model) {
+    	Borrower bor = new Borrower();
+    	bor = borrower;
+    	model.addAttribute("borrower", bor);
+    	model.addAttribute("errormsg", errormsg);
         return "editBorrower";
     }
     
     
     @RequestMapping(value = "/updateBorrower", method = RequestMethod.POST)
-    public String editBorrower(HttpServletRequest request, @RequestParam(name="errormsg", 
-    required=false, defaultValue="") String errormsg, Model model) {
+    public String editBorrower(@SessionAttribute("borrower") Borrower borrower, 
+    		HttpServletRequest request, @RequestParam(name="errormsg", 
+    		required=false, defaultValue="") String errormsg, Model model) {
+    	
+    	Borrower bor = new Borrower();
+    	bor = borrower;
+    	model.addAttribute("borrower", bor);
     	
 		String name = request.getParameter("name");
 		String address = request.getParameter("address");
 		String phone = request.getParameter("phone");
-		if(phone.matches("[0-9]+") && phone.length() == 10) {
+		
+		if(phone.matches("[0-9-]+") && phone.length() <= 12 ) {
 			//phone number is in correct format
 		}
 		else {
@@ -75,7 +86,6 @@ public class LibraryController {
 		}
 		String password = request.getParameter("password");
 		
-    	Borrower bor = new Borrower();
     	bor.setName(name);
     	bor.setPhone(phone);
     	bor.setAddress(address);
