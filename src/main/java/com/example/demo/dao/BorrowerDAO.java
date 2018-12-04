@@ -1,8 +1,10 @@
 package com.example.demo.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +41,10 @@ public class BorrowerDAO {
 		Borrower bor = new Borrower();
 		bor = borrowerMapper.getBorrower(cardno);
 		return bor;
+	}
+
+	public List<String> getCardNumbers() {
+		return borrowerMapper.getCardNumbers();
 	}
 	
 }

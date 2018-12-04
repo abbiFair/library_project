@@ -35,4 +35,8 @@ public class BorrowerService {
 		return borDAO.getBorrower(cardno);
 	}
 
+	public List<String> getCardNumbers() {
+		return borDAO.getCardNumbers();
+	}
+
 }
