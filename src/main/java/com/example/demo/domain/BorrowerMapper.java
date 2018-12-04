@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface BorrowerMapper {
@@ -20,4 +21,7 @@ public interface BorrowerMapper {
 
 	@Select("SELECT cardno FROM BORROWER")
 	List<String> getCardNumbers();
+
+	@Update("UPDATE BORROWER set name = #{name}, address = #{address}, phone = #{phone} WHERE cardno = #{cardno}")
+	void updateBorrower(Borrower bor);
 }

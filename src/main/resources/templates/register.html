@@ -7,37 +7,40 @@
 
 </head>
 <body>
-
+<h1>Register a new borrower:</h1>
 <form action="/newBorrower" method="POST">
 
 <table class="prettytable">
 
 <tr> 
 <td> Name: </td>
-<td> <input type="text" name="name"/> </td>
+<td> <input type="text" name="name" required/> </td>
 </tr>
 
 <tr> 
 <td> Address: </td>
-<td> <input type="text" name="address"/> </td>
+<td> <input type="text" name="address" required/> </td>
 </tr>
 
 <tr> 
 <td> Phone Number: </td>
-<td> <input type="text" name="phone"/> </td>
+<td> <input type="text" name="phone" required/> </td>
 </tr>
 
 <tr> 
 <td> Password: </td>
-<td> <input type="text" name="password"/> </td>
+<td> <input type="text" name="password" required/> </td>
 </tr>
 
 <tr> 
-<td> <input type="submit" value="Submit">
-</td>
+<td> <input type="submit" value="Submit"></td>
 <td> 
 <input type="reset" value="Reset">
  </td>
+</tr>
+
+<tr> 
+<td><p><a href="login">Go Back to Login</a></p></td>
 </tr>
  
 </table>

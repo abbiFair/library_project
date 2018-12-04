@@ -4,19 +4,17 @@
     <title>Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<body>
-    <p th:text="'Hello, ' + ${name} + '!'" />
-    
-	<form action="/viewbooks">
+<body> 
+	<h1>Welcome!</h1> 
+	<form action="/viewbooks" method="POST">
 
 	<table class="prettytable">
 
 	<tr> 
-		<td> <input type="submit" value="View Books">
-	</td>
-	<td> 
-		<input type="submit" value="Check Out Books">
- 	</td>
+		<td><p><a href="editBorrower">Edit Profile</a></p></td>
+ 	</tr>
+	<tr> 
+		<td> <input type="submit" value="View Books"> </td>
 	</tr>
  
 </table>

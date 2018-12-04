@@ -47,5 +47,10 @@ public class BorrowerDAO {
 	public List<String> getCardNumbers() {
 		return borrowerMapper.getCardNumbers();
 	}
+
+	public void updateBorrower(Borrower bor) {
+		borrowerMapper.updateBorrower(bor);
+		
+	}
 	
 }

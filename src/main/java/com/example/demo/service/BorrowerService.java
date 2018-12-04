@@ -39,4 +39,9 @@ public class BorrowerService {
 		return borDAO.getCardNumbers();
 	}
 
+	public void updateBorrower(Borrower bor) {
+		borDAO.updateBorrower(bor);
+		
+	}
+
 }
