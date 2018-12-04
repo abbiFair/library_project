@@ -16,4 +16,7 @@ public interface BorrowerMapper {
 
 	@Select("SELECT * FROM BORROWER WHERE cardno =#{cardno}")
 	Borrower getBorrower(String cardno);
+
+	@Select("SELECT cardno FROM BORROWER")
+	List<String> getCardNumbers();
 }
