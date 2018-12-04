@@ -10,6 +10,7 @@
 	<h1>Library Login</h1>
 	<form action="/validateLogin" method="POST">
 		<table class="prettytable">
+			<p th:text="${errormsg}"/>
 			<tr> 
 				<td> Card Number: </td>
 				<td> <input type="text" name="cardno" required/> </td>
@@ -26,7 +27,7 @@
 			</tr>
 
 			<tr> 
-				<td><p><a href="register.html">New Borrower? Register Here</a></p></td>
+				<td><p><a href="register">New Borrower? Register Here</a></p></td>
  			</tr>
  
 		</table>
