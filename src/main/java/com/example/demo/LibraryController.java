@@ -39,10 +39,16 @@ public class LibraryController {
 	LibraryBranchService libraryBranchService;
 	
     @GetMapping("/home")
-    public String home(@SessionAttribute("borrower") Borrower borrower, Model model) {
+    public String home(@SessionAttribute("borrower") Borrower borrower, Model model, HttpSession session) {
     	Borrower bor = new Borrower();
     	bor = borrower;
     	model.addAttribute("borrower", bor);
+    	
+    	List<BookLoan> myLoans = new ArrayList<BookLoan>();
+    	myLoans = bookService.getBookLoanByCard(bor.getCardno());
+    	model.addAttribute("myLoans", myLoans);
+    	session.setAttribute("myLoans", myLoans);
+
         return "home";
     }
     
@@ -140,7 +146,8 @@ public class LibraryController {
     }
     
     @GetMapping("/login")
-    public String login(@RequestParam(name="errormsg", required=false, defaultValue="") String errormsg, Model model) {
+    public String login(@RequestParam(name="errormsg", required=false, defaultValue="") String errormsg,
+    		Model model) {
     	model.addAttribute("errormsg", errormsg);
     	return "login";
     }
@@ -164,8 +171,15 @@ public class LibraryController {
     	}
     	
 		if(bor.getPassword().equals(password)){
+			
 			session.setAttribute("borrower", bor);
 			model.addAttribute("borrower", bor);
+			
+	    	List<BookLoan> myBooks = new ArrayList<BookLoan>();
+	    	myBooks = bookService.getBookLoanByCard(bor.getCardno());
+	    	session.setAttribute("myBooks", myBooks);
+	    	model.addAttribute("myBooks", myBooks);
+	    	
 			return "home";
 		}
 		

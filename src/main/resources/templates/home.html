@@ -2,29 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="css/example.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>  
 	<form action="/viewbooks">
 
-	<table class="prettytable">
+	<p th:text="'Welcome ' + ${borrower.name} + '!'" />
+	
+<table class="prettytable">
+
 
 	<tr>
-		<td><p th:text="'Welcome ' + ${borrower.name} + '!'" /></td>
-	</tr>
-	<tr>
 	    <th>Title</th>
-	    <th>Publisher</th>
-	    <th>Library Branch</th>
 	    <th>Due Date </th>
 	</tr>
+	<tr th:each="book: ${myBooks}">
+		<td th:text="${book.title}" />
+		<td th:text="${book.duedate}" />
+	</tr>
+</table>
 	
+<table class="prettytable">
 	<tr> 
 		<td> <input type="submit" name="action" value="Edit Profile"></td>
 		<td> <input type="submit" name="action" value="View Books"> </td>
 	</tr>
- 
-</table>
+ </table>
+
 </form>
     
 </body>

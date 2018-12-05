@@ -27,6 +27,12 @@ public class BookService {
 		return bookList;
 	}
 	
+	public List<BookLoan> getBookLoanByCard(String cardno) {
+		List<BookLoan> bookList = new ArrayList<BookLoan>();
+		bookList = bookDAO.getBookLoanByCard(cardno);
+		return bookList;
+	}
+	
 	public Book getBook(Book book) {
 		return bookDAO.getBook(book);
 	}
