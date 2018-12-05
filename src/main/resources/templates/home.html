@@ -17,7 +17,7 @@
 	    <th>Title</th>
 	    <th>Due Date </th>
 	</tr>
-	<tr th:each="book: ${myBooks}">
+	<tr th:each="book: ${myLoans}">
 		<td th:text="${book.title}" />
 		<td th:text="${book.duedate}" />
 	</tr>

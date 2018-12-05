@@ -75,3 +75,6 @@ table.prettytable caption {
   margin-left: inherit;
   margin-right: inherit;
 } 
+form.options {
+	display: inline-block;
+}

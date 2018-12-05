@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.example.demo.domain.Book;
 import com.example.demo.domain.BookLoan;
 import com.example.demo.domain.Borrower;
@@ -175,10 +173,10 @@ public class LibraryController {
 			session.setAttribute("borrower", bor);
 			model.addAttribute("borrower", bor);
 			
-	    	List<BookLoan> myBooks = new ArrayList<BookLoan>();
-	    	myBooks = bookService.getBookLoanByCard(bor.getCardno());
-	    	session.setAttribute("myBooks", myBooks);
-	    	model.addAttribute("myBooks", myBooks);
+	    	List<BookLoan> myLoans = new ArrayList<BookLoan>();
+	    	myLoans = bookService.getBookLoanByCard(bor.getCardno());
+	    	session.setAttribute("myLoans", myLoans);
+	    	model.addAttribute("myLoans", myLoans);
 	    	
 			return "home";
 		}
@@ -189,13 +187,19 @@ public class LibraryController {
     }
         
     @GetMapping("/viewbooks")
-    public String displayBooks(HttpServletRequest request, @ModelAttribute Borrower borrower, 
+    public String displayBooks(@SessionAttribute("borrower") Borrower bor, HttpServletRequest request, @ModelAttribute Borrower borrower, 
     		@ModelAttribute LibraryBranch branch, Model model) {
 
     	String action = request.getParameter("action");
+    	List<BookLoan> myLoans = new ArrayList<BookLoan>();
 
     	if ("Edit Profile".equals(action)) {
     	    return "editBorrower";
+    	}
+    	if("Profile".equals(action)) {
+    		myLoans = bookService.getBookLoanByCard(bor.getCardno());
+        	model.addAttribute("myLoans", myLoans);
+    		return "home";
     	}
     	
     	List<Book> bookList = new ArrayList<Book>();
@@ -214,10 +218,7 @@ public class LibraryController {
     }
     
     @RequestMapping(value = "/updatebooklist", method = RequestMethod.POST)
-    public String updateBookByFilter(@ModelAttribute("borrower") Borrower borrower, @ModelAttribute("branch") LibraryBranch branch, Model model) {
-    	//borrower = new Borrower();
-    	//borrower.setCardno("000000000");
-   	   	
+    public String updateBookByFilter(@SessionAttribute("borrower") Borrower borrower, @ModelAttribute("branch") LibraryBranch branch, Model model) {
     	List<LibraryBranch> allBranches = new ArrayList<LibraryBranch>();
     	allBranches = libraryBranchService.getAllBranches();
     	
@@ -237,32 +238,75 @@ public class LibraryController {
     }
     
     @RequestMapping(value = "/checkout", method = RequestMethod.POST)
-    public String checkOutBooks(@ModelAttribute("borrower") Borrower borrower, @ModelAttribute("branch") LibraryBranch branch, Model model, HttpSession session) {
-    	borrower.setCardno("12");
+    public String checkOutBooks(@SessionAttribute("borrower") Borrower bor, @ModelAttribute("borrower") Borrower borrower, 
+    		@ModelAttribute("branch") LibraryBranch branch, Model model, HttpSession session) {
+    	// Update session object borrower to include the borrower's books that are being checked out
     	List<Book> checkoutbooks = borrower.getBooks();
-
-    	model.addAttribute("checkoutbooks", checkoutbooks);
-    	model.addAttribute("borrower", borrower);
-    	session.setAttribute("borrower", borrower);
+    	Borrower completedBorrower = bor;
+    	completedBorrower.setBooks(checkoutbooks);
+    	
+    	// Prepare book loan objects to verify check out
+    	BookLoan bookloan;
+    	Boolean duplicate = false;
+    	List<BookLoan> myLoans = new ArrayList<BookLoan>();
+    	myLoans = bookService.getBookLoanByCard(bor.getCardno());
+    	List<Book> verifiedBooks = new ArrayList<Book>();
+    	List<Book> duplicateBooks = new ArrayList<Book>();
+    	
+    	for(Book book : checkoutbooks) {
+    		bookloan = new BookLoan(book.getBookid(),branch.getBranchid(),bor.getCardno());
+    		
+    		for(BookLoan loan: myLoans) {
+    			if(loan.getBookid().equals(bookloan.getBookid()) && loan.getBranchid().equals(bookloan.getBranchid())) {
+    				duplicateBooks.add(book);
+    				duplicate = true;
+    			}
+    		}
+    		
+    		if(!duplicate) {
+    			verifiedBooks.add(book);
+    		}
+    		
+    		duplicate = false;
+    	}
+    	
+    	completedBorrower.setBooks(verifiedBooks);
+    	
+    	model.addAttribute("verifiedbooks", verifiedBooks);
+    	model.addAttribute("duplicatebooks", duplicateBooks);
+        session.setAttribute("branch", branch);
+    	model.addAttribute("borrower", bor);
     	
     	return "checkout";
     }
     
     @RequestMapping(value = "/confirmcheckout", method = RequestMethod.POST)
-    public void confirmCheckOut(@SessionAttribute("borrower") Borrower borrower, @ModelAttribute("branch") LibraryBranch branch, Model model) {
-    	List<Book> checkoutbooks = borrower.getBooks();
+    public String confirmCheckOut(@SessionAttribute("borrower") Borrower borrower, @SessionAttribute("branch") LibraryBranch libraryBranch,
+    		@ModelAttribute("branch") LibraryBranch branch, HttpServletRequest request, Model model, HttpSession session) {
+    	
+    	String action = request.getParameter("action");
+    	List<LibraryBranch> allBranches = new ArrayList<LibraryBranch>();
+    	
+    	if ("Cancel".equals(action)) {
+    		allBranches = libraryBranchService.getAllBranches();
+    		model.addAttribute("allBranches", allBranches); 	
+    	    return "viewbooks";
+    	}
+    	
     	BookLoan bookloan;
     	
-    	for(Book book : checkoutbooks) {
-    		bookloan = new BookLoan(book.getBookid(),branch.getBranchid(),borrower.getCardno());
+    	for(Book book : borrower.getBooks()) {
+    		bookloan = new BookLoan(book.getBookid(),libraryBranch.getBranchid(),borrower.getCardno());
     		bookService.insertBookLoan(bookloan);
     		System.out.println("Book loan for" + book.getTitle() + " has been inserted.");
     	}
-    		
-    	System.out.println(branch.getBranchid());
     	
-    	//model.addAttribute("checkoutbooks", checkoutbooks);
+    	List<BookLoan> myLoans = new ArrayList<BookLoan>();
+    	myLoans = bookService.getBookLoanByCard(borrower.getCardno());
+    	model.addAttribute("myLoans", myLoans);
+    	session.setAttribute("myLoans", myLoans);
+    	model.addAttribute("borrower", borrower);
+    	
+    	return "home";
     }
-
-
 }
