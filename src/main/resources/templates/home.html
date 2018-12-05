@@ -12,11 +12,16 @@
 	<tr>
 		<td><p th:text="'Welcome ' + ${borrower.name} + '!'" /></td>
 	</tr>
+	<tr>
+	    <th>Title</th>
+	    <th>Publisher</th>
+	    <th>Library Branch</th>
+	    <th>Due Date </th>
+	</tr>
+	
 	<tr> 
-		<td><p><a href="editBorrower">Edit Profile</a></p></td>
- 	</tr>
-	<tr> 
-		<td> <input type="submit" value="View Books"> </td>
+		<td> <input type="submit" name="action" value="Edit Profile"></td>
+		<td> <input type="submit" name="action" value="View Books"> </td>
 	</tr>
  
 </table>

@@ -175,9 +175,14 @@ public class LibraryController {
     }
         
     @GetMapping("/viewbooks")
-    public String displayBooks(@ModelAttribute Borrower borrower,@ModelAttribute LibraryBranch branch, Model model) {
-    	//borrower = new Borrower();
-    	//borrower.setCardno("000000000");
+    public String displayBooks(HttpServletRequest request, @ModelAttribute Borrower borrower, 
+    		@ModelAttribute LibraryBranch branch, Model model) {
+
+    	String action = request.getParameter("action");
+
+    	if ("Edit Profile".equals(action)) {
+    	    return "editBorrower";
+    	}
     	
     	List<Book> bookList = new ArrayList<Book>();
     	bookList = bookService.getBookList();
