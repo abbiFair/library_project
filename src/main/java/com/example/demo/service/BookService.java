@@ -46,4 +46,8 @@ public class BookService {
 	public void insertBookLoan(BookLoan bookloan) {
 		bookDAO.insertBookLoan(bookloan);
 	}
+	
+	public void updateBookLoan(BookLoan bookloan) {
+		bookDAO.updateBookLoan(bookloan);
+	}
 }

@@ -6,6 +6,7 @@ public class BookLoan {
 	private String cardno;
 	private String duedate;
 	private String title;
+	private String rating;
 	
 	
 	/**
@@ -14,19 +15,22 @@ public class BookLoan {
 	 * @param cardno
 	 * @param duedate
 	 * @param title
+	 * @param rating
 	 */
 	
 	public BookLoan() {
 		
 	}
 	
-	public BookLoan(String bookid, String branchid, String cardno, String duedate, String title) {
+	public BookLoan(String bookid, String branchid, String cardno, String duedate,
+			String title, String rating) {
 		super();
 		this.bookid = bookid;
 		this.branchid = branchid;
 		this.cardno = cardno;
 		this.duedate = duedate;
 		this.title = title;
+		this.rating = rating;
 	}
 	public BookLoan(String bookid, String branchid, String cardno) {
 		super();
@@ -63,6 +67,12 @@ public class BookLoan {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public String getRating() {
+		return rating;
+	}
+	public void setRating(String rating) {
+		this.rating = rating;
 	}
 	@Override
 	public String toString() {

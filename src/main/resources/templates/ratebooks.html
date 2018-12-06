@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rate Books</title>
+    <link rel="stylesheet" type="text/css" href="css/example.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>  
+	<form th:action="@{/submitRatings/' + ${bookloan.bookid}+ '/' + ${bookloan.branchid}}" >
+
+	<p th:text="'Rate Your Books'" />
+	
+<table class="prettytable">
+
+
+	<tr>
+		<td>Title :</td>
+		<td th:text="${bookloan.title}"/>
+		<td> Rating (between 1 and 10): <input type="number" name="rating" th:field="*{bookloan.rating}" min="1" max="10"/> 
+		</td>
+	</tr>
+</table>
+	
+<table class="prettytable">
+	<tr>
+		<td> <input type="submit" value="Submit"></td>
+		<td> <input type="reset" value="Reset"> </td>
+		
+	</tr>
+ </table>
+ <p><a href="home">Back to Home</a></p>
+
+</form>
+    
+</body>
+</html>

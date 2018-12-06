@@ -40,6 +40,10 @@ public class BookDAO {
 	public void insertBookLoan(BookLoan bookloan) {
 		bookMapper.insertBookLoan(bookloan);
 	}
+	
+	public void updateBookLoan(BookLoan bookloan) {
+		bookMapper.updateBookLoan(bookloan);
+	}
 
 	public List<BookLoan> getBookLoanByCard(String cardno) {
 		List<BookLoan> bookList = new ArrayList<BookLoan>();	

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface BookMapper {
@@ -57,4 +58,8 @@ public interface BookMapper {
 	@Select("select b1.bookid, b1.branchid, b1.cardno, b1.duedate, b2.title from book_loans b1, book b2 "
 			+ "where b1.cardno = #{cardno} and b1.bookid = b2.bookid")
 	List<BookLoan> getBookLoanByCard(String cardno);
+
+	
+	@Update("UPDATE BOOK_LOANS set rating = #{rating} WHERE cardno = #{cardno}, bookid = #{bookid}, branchid=#{branchid}")
+	void updateBookLoan(BookLoan bookloan);
 }

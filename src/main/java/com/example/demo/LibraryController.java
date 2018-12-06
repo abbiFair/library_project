@@ -51,6 +51,34 @@ public class LibraryController {
         return "home";
     }
     
+    @GetMapping("/ratebooks/{bookid}/{branchid}")
+    public String ratebooks(@PathVariable String bookid, @PathVariable String branchid,
+    		@SessionAttribute("borrower") Borrower borrower, Model model, HttpSession session) {
+    	
+    	Borrower bor = new Borrower();
+    	bor = borrower;
+    	model.addAttribute("borrower", bor);
+    	BookLoan bookloan = new BookLoan(bookid, branchid, bor.getCardno());
+    	model.addAttribute("bookloan", bookloan);
+    	session.setAttribute("bookloan", bookloan);
+        return "ratebooks";
+    }
+    
+    @GetMapping("/submitRatings/{bookid}/{branchid}")
+    public String submitRatings(@PathVariable String bookid, @PathVariable String branchid,
+    		@SessionAttribute("borrower") Borrower borrower,
+    		HttpServletRequest request, Model model, HttpSession session) {
+    	Borrower bor = new Borrower();
+    	bor = borrower;
+    	model.addAttribute("borrower", bor);
+    	
+		String rating = request.getParameter("rating");
+		
+		BookLoan bookloan = new BookLoan(bookid, branchid, bor.getCardno());
+
+        return "home";
+    }
+    
     @GetMapping("/register")
     public String register( Model model) {
         return "register";
@@ -195,6 +223,7 @@ public class LibraryController {
     	List<BookLoan> myLoans = new ArrayList<BookLoan>();
 
     	if ("Edit Profile".equals(action)) {
+    		model.addAttribute("borrower", bor);
     	    return "editBorrower";
     	}
     	if("Profile".equals(action)) {
