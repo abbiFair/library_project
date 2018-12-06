@@ -32,12 +32,12 @@
 			    <th>Check Out</th>
 		    </tr>
 		    
-		    <tr th:each="book: ${bookList}">
-		        <td th:text="${book.title}" />
-		        <td th:text="${book.publisher}" />
-		        <td th:text="${book.numberavailable}" />
+		    <tr th:each="avail: ${availList}">
+		        <td th:text="${avail.title}" />
+		        <td th:text="${avail.publisher}" />
+		        <td th:text="${avail.numberavailable}" />
 		        <td>
-		        	<input type="checkbox" th:field="*{books}" th:value="${book.bookid}">
+		        	<input type="checkbox" th:field="*{books}" th:value="${avail.bookid}">
 	        	</td>
 		    </tr>
 	    </table>
@@ -48,6 +48,21 @@
 		    	<td><input type="reset" value="Reset"></td>
 	    	</tr>
 	    </table>
+	    
+	    	    <table class = "prettytable">
+		    <tr>
+			    <th>Title</th>
+			    <th>Publisher</th>
+			    <th>Number Available</th>
+		    </tr>
+		    
+		    <tr th:each="unavail: ${unavailList}">
+		        <td th:text="${unavail.title}" />
+		        <td th:text="${unavail.publisher}" />
+		        <td th:text="${unavail.numberavailable}" />
+		    </tr>
+	    </table>
+	    
     </form>
 </body>
 </html>

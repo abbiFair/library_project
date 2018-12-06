@@ -1,5 +1,6 @@
 package com.example.demo;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -203,13 +204,25 @@ public class LibraryController {
     	}
     	
     	List<Book> bookList = new ArrayList<Book>();
+    	List<Book> unavailList = new ArrayList<Book>();
+    	List<Book> availList = new ArrayList<Book>();
     	bookList = bookService.getBookList();
+    	
+		for(Book book: bookList) {
+			if(book.getNumberavailable().equals("0")) {
+				unavailList.add(book);
+			}
+			else {
+				availList.add(book);
+			}
+    	}
     	
     	branch = new LibraryBranch();
     	List<LibraryBranch> allBranches = new ArrayList<LibraryBranch>();
     	allBranches = libraryBranchService.getAllBranches();
     	
-        model.addAttribute("bookList", bookList);
+    	model.addAttribute("unavailList", unavailList);
+        model.addAttribute("availList", availList);
         model.addAttribute("borrower", borrower);
         model.addAttribute("allBranches", allBranches);
         model.addAttribute("branch", branch);
@@ -223,13 +236,24 @@ public class LibraryController {
     	allBranches = libraryBranchService.getAllBranches();
     	
     	List<Book> bookList = new ArrayList<Book>();
+    	List<Book> unavailList = new ArrayList<Book>();
+    	List<Book> availList = new ArrayList<Book>();
     	String branchid = branch.getBranchid();
     	
     	if(!(branchid.equals("0"))) {
     		bookList = bookService.getBookListByBranch(branch);
+    		for(Book book: bookList) {
+    			if(book.getNumberavailable().equals("0")) {
+    				unavailList.add(book);
+    			}
+    			else {
+    				availList.add(book);
+    			}
+        	}
     	}
     	
-    	model.addAttribute("bookList", bookList);
+    	model.addAttribute("unavailList", unavailList);
+    	model.addAttribute("availList", availList);
         model.addAttribute("borrower", borrower);
         model.addAttribute("allBranches", allBranches);
         model.addAttribute("branch", branch);
