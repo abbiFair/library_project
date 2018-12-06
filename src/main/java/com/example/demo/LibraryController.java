@@ -243,6 +243,10 @@ public class LibraryController {
     	if(!(branchid.equals("0"))) {
     		bookList = bookService.getBookListByBranch(branch);
     		for(Book book: bookList) {
+    			if(book.getRating() == null) {
+    				book.setRating("Not Rated");
+    			}
+    			
     			if(book.getNumberavailable().equals("0")) {
     				unavailList.add(book);
     			}

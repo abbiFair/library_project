@@ -31,18 +31,24 @@ public interface BookMapper {
 //			"where b.bookid = t1.bookid")
 //	List<Book> getBookListByBranch(LibraryBranch branch);
 	
-	@Select("select t2.bookid, t2.title, t2.publisher, (t2.navailable - coalesce(t3.count1,0)) numberavailable\r\n" + 
+	@Select("select t2.bookid, t2.title, t2.publisher, (t2.navailable - coalesce(t5.count1,0)) numberavailable, t5.average rating\r\n" + 
 			"from\r\n" + 
-			"(select b.bookid, b.title, b.publisher, t1.available navailable\r\n" + 
+			"(select b.bookid, b.title, b.publisher, t1.available navailable \r\n" + 
 			"from book b,(select bc.bookid, bc.branchid,bc.no_of_copies available\r\n" + 
-			"             from book_copies bc\r\n" + 
+			"			 from book_copies bc\r\n" + 
 			"             where bc.branchid = #{branchid}) t1\r\n" + 
-			"where b.bookid = t1.bookid) t2 \r\n" + 
+			"where b.bookid = t1.bookid) t2\r\n" + 
 			"left join\r\n" + 
-			"(select bl.bookid, count(bl.bookid) count1\r\n" + 
+			"(select t3.bookid, t3.count1, t4.average\r\n" + 
+			"from (select bl.bookid, count(bl.bookid) count1, avg(bl.rating)\r\n" + 
 			"from book_loans bl\r\n" + 
-			"where bl.datein is null and bl.branchid = #{branchid}\r\n" + 
-			"group by bl.bookid) t3 on t2.bookid = t3.bookid")
+			"where bl.datein is null and bl.branchid = #{branchid} \r\n" + 
+			"group by bl.bookid) t3,\r\n" + 
+			"(select bl.bookid, avg(bl.rating) average\r\n" + 
+			"from book_loans bl\r\n" + 
+			"where bl.branchid = #{branchid} \r\n" + 
+			"group by bl.bookid) t4\r\n" + 
+			"where t3.bookid = t4.bookid) t5 on t2.bookid = t5.bookid")
 	List<Book> getBookListByBranch(LibraryBranch branch);
 
 	@Insert("insert into book_loans values (${bookid},${branchid},${cardno},sysdate,add_months(sysdate,1),null, null)")

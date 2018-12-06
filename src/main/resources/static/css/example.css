@@ -57,6 +57,12 @@ h1, h2, h3, h4 {
     margin: 10px;
 	line-height: 13px;
 }
+
+ table.buttons {
+  margin: 1em 1em 1em 2em;
+  background: whitesmoke;
+  border-collapse: collapse;
+}
   
  table.prettytable {
   margin: 1em 1em 1em 2em;
@@ -75,6 +81,3 @@ table.prettytable caption {
   margin-left: inherit;
   margin-right: inherit;
 } 
-form.options {
-	display: inline-block;
-}

@@ -5,24 +5,27 @@ public class Book {
 	private String title;
 	private String publisher;
 	private String numberavailable;
+	private String rating;
 	
 	/**
 	 * @param bookid
 	 * @param title
 	 * @param publisher
 	 * @param numberavailable
+	 * @param rating
 	 */
 	
 	public Book() {
 		
 	}
 	
-	public Book(String bookid, String title, String publisher, String numberavailable) {
+	public Book(String bookid, String title, String publisher, String numberavailable, String rating) {
 		super();
 		this.bookid = bookid;
 		this.title = title;
 		this.publisher = publisher;
 		this.numberavailable = numberavailable;
+		this.rating = rating;
 	}
 	public String getBookid() {
 		return bookid;
@@ -48,9 +51,15 @@ public class Book {
 	public void setNumberavailable(String numberavailable) {
 		this.numberavailable = numberavailable;
 	}
+	public String getRating() {
+		return rating;
+	}
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
 	@Override
 	public String toString() {
-		return "Book [bookid=" + bookid + ", title=" + title + ", publisher=" + publisher + ", numberavailable=" + numberavailable + "]";
+		return "Book [bookid=" + bookid + ", title=" + title + ", publisher=" + publisher + ", numberavailable=" + numberavailable + ", rating=" + rating + "]";
 	}
 	
 }

@@ -7,30 +7,33 @@
 </head>
 <body>  
 	<form action="/viewbooks">
-
-	<p th:text="'Welcome ' + ${borrower.name} + '!'" />
+		<h1>Home</h1>
+		<table>
+			<tr>
+				<td th:text="'Welcome ' + ${borrower.name} + '!'"></td>
+			</tr>
+			<tr><td></td></tr>
+			<tr>
+				<td>The following books have been checked out by you.</td>
+			</tr>
+		</table>
+		<table class="prettytable">
+			<tr>
+			    <th>Title</th>
+			    <th>Due Date </th>
+			</tr>
+			<tr th:each="book: ${myLoans}">
+				<td th:text="${book.title}" />
+				<td th:text="${book.duedate}" />
+			</tr>
+		</table>
 	
-<table class="prettytable">
-
-
-	<tr>
-	    <th>Title</th>
-	    <th>Due Date </th>
-	</tr>
-	<tr th:each="book: ${myLoans}">
-		<td th:text="${book.title}" />
-		<td th:text="${book.duedate}" />
-	</tr>
-</table>
-	
-<table class="prettytable">
-	<tr> 
-		<td> <input type="submit" name="action" value="Edit Profile"></td>
-		<td> <input type="submit" name="action" value="View Books"> </td>
-	</tr>
- </table>
-
-</form>
-    
+		<table class="buttons">
+			<tr> 
+				<td> <input type="submit" name="action" value="Edit Profile"></td>
+				<td> <input type="submit" name="action" value="View Books"> </td>
+			</tr>
+		 </table>
+	</form> 
 </body>
 </html>
