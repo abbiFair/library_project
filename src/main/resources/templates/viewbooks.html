@@ -15,7 +15,6 @@
 			    <td>
 			    	<select th:field="*{branchid}">
 			    		<option value="0">Select Branch</option>
-<!-- 			    		<option value="All">All Branches</option> -->
 			    		<option th:each="brancheach: ${allBranches}" th:value="${brancheach.branchid}" th:text="${brancheach.branchname}"></option>
 			    	</select>
 			    </td>

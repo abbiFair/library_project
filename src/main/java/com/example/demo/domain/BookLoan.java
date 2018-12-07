@@ -1,5 +1,8 @@
 package com.example.demo.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BookLoan {
 	private String bookid;
 	private String branchid;

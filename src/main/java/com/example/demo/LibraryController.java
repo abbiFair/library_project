@@ -45,26 +45,38 @@ public class LibraryController {
     	
     	List<BookLoan> myLoans = new ArrayList<BookLoan>();
     	myLoans = bookService.getBookLoanByCard(bor.getCardno());
-    	model.addAttribute("myLoans", myLoans);
-    	session.setAttribute("myLoans", myLoans);
+    	
+    	List<BookLoan> fixedBooks = new ArrayList<BookLoan>(); 
+		for(BookLoan book: myLoans) {
+			if(book.getRating() == null) {
+				book.setRating("Not Rated");
+			}
+			fixedBooks.add(book);
+		}
+		
+    	model.addAttribute("myLoans", fixedBooks);
+    	session.setAttribute("myLoans", fixedBooks);
 
         return "home";
     }
     
-    @GetMapping("/ratebooks/{bookid}/{branchid}")
-    public String ratebooks(@PathVariable String bookid, @PathVariable String branchid,
+    @GetMapping("/ratebooks{bookid}-{branchid}")
+    public String ratebooks(@PathVariable String bookid, @PathVariable String branchid, 
     		@SessionAttribute("borrower") Borrower borrower, Model model, HttpSession session) {
-    	
     	Borrower bor = new Borrower();
     	bor = borrower;
+    	Book ratedBook = new Book();
+    	ratedBook.setBookid(bookid);
     	model.addAttribute("borrower", bor);
     	BookLoan bookloan = new BookLoan(bookid, branchid, bor.getCardno());
+    	ratedBook = bookService.getBook(ratedBook);
+    	bookloan.setTitle(ratedBook.getTitle());
     	model.addAttribute("bookloan", bookloan);
     	session.setAttribute("bookloan", bookloan);
         return "ratebooks";
     }
     
-    @GetMapping("/submitRatings/{bookid}/{branchid}")
+    @GetMapping("/submitRatings{bookid}-{branchid}")
     public String submitRatings(@PathVariable String bookid, @PathVariable String branchid,
     		@SessionAttribute("borrower") Borrower borrower,
     		HttpServletRequest request, Model model, HttpSession session) {
@@ -75,7 +87,24 @@ public class LibraryController {
 		String rating = request.getParameter("rating");
 		
 		BookLoan bookloan = new BookLoan(bookid, branchid, bor.getCardno());
-
+		bookloan.setRating(rating);
+		
+		bookService.updateBookLoan(bookloan);
+		
+		List<BookLoan> myLoans = new ArrayList<BookLoan>();
+    	myLoans = bookService.getBookLoanByCard(bor.getCardno());
+    	
+    	List<BookLoan> fixedBooks = new ArrayList<BookLoan>(); 
+		for(BookLoan book: myLoans) {
+			if(book.getRating() == null) {
+				book.setRating("Not Rated");
+			}
+			fixedBooks.add(book);
+		}
+		
+    	model.addAttribute("myLoans", fixedBooks);
+    	session.setAttribute("myLoans", fixedBooks);
+    	
         return "home";
     }
     
@@ -202,10 +231,19 @@ public class LibraryController {
 			session.setAttribute("borrower", bor);
 			model.addAttribute("borrower", bor);
 			
-	    	List<BookLoan> myLoans = new ArrayList<BookLoan>();
+			List<BookLoan> myLoans = new ArrayList<BookLoan>();
 	    	myLoans = bookService.getBookLoanByCard(bor.getCardno());
-	    	session.setAttribute("myLoans", myLoans);
-	    	model.addAttribute("myLoans", myLoans);
+	    	
+	    	List<BookLoan> fixedBooks = new ArrayList<BookLoan>(); 
+			for(BookLoan book: myLoans) {
+				if(book.getRating() == null) {
+					book.setRating("Not Rated");
+				}
+				fixedBooks.add(book);
+			}
+			
+	    	model.addAttribute("myLoans", fixedBooks);
+	    	session.setAttribute("myLoans", fixedBooks);
 	    	
 			return "home";
 		}
@@ -227,8 +265,17 @@ public class LibraryController {
     	    return "editBorrower";
     	}
     	if("Profile".equals(action)) {
-    		myLoans = bookService.getBookLoanByCard(bor.getCardno());
-        	model.addAttribute("myLoans", myLoans);
+        	myLoans = bookService.getBookLoanByCard(bor.getCardno());
+        	
+        	List<BookLoan> fixedBooks = new ArrayList<BookLoan>(); 
+    		for(BookLoan book: myLoans) {
+    			if(book.getRating() == null) {
+    				book.setRating("Not Rated");
+    			}
+    			fixedBooks.add(book);
+    		}
+    		
+        	model.addAttribute("myLoans", fixedBooks);
     		return "home";
     	}
     	

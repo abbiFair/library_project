@@ -60,6 +60,6 @@ public interface BookMapper {
 	List<BookLoan> getBookLoanByCard(String cardno);
 
 	
-	@Update("UPDATE BOOK_LOANS set rating = #{rating} WHERE cardno = #{cardno}, bookid = #{bookid}, branchid=#{branchid}")
+	@Update("UPDATE BOOK_LOANS set rating = '${rating}' WHERE cardno = '${cardno}' and bookid = '${bookid}' and branchid = '${branchid}'")
 	void updateBookLoan(BookLoan bookloan);
 }
