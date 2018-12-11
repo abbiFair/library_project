@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="css/example.css" />
 </head>
 <body>
-	<h1>Rate Your Books</h1>
+	<h1>Rate My Books</h1>
 	<form th:action="@{'/submitRatings' + ${bookloan.bookid} + '-' + ${bookloan.branchid}}" >	
 		<table class="prettytable">
 			<tr>
@@ -32,7 +32,7 @@
 			</tr>
 		</table>
 		
-		<table>
+		<table class="buttons">
 			<tr>
 				<td> <input type="submit" value="Submit"></td>
 				<td> <input type="reset" value="Reset"> </td>
