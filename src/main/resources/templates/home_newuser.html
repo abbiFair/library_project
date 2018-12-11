@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="css/example.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>  
+	<form action="/viewbooks">
+		<h1>Home</h1>
+		<table>
+			<tr>
+				<td th:text="'Welcome ' + ${borrower.name} + '!'">
+				<td> <input type="submit" name="action" value="Edit Profile"> </td>
+			</tr>
+			<td th:text="${errormsg}"/>
+			<tr><td></td></tr>
+		</table>
+	
+		<table class="buttons">
+			<tr> 
+				<td> <input type="submit" name="action" value="View Books"> </td>
+				<td> <input type="submit" name="action" value="Logout"> </td>
+			</tr>
+		 </table>
+	</form> 
+</body>
+</html>

@@ -171,12 +171,12 @@ public class LibraryController {
     
     @RequestMapping(value = "/newBorrower", method = RequestMethod.POST)
     public String newBorrower(HttpServletRequest request, @RequestParam(name="errormsg", 
-    required=false, defaultValue="") String errormsg, Model model) {
+    required=false, defaultValue="") String errormsg, Model model, HttpSession session) {
     	
 		String name = request.getParameter("name");
 		String address = request.getParameter("address");
 		String phone = request.getParameter("phone");
-		if(phone.matches("[0-9]+") && phone.length() == 10) {
+		if(phone.matches("[0-9-]+") && phone.length() <= 10) {
 			//phone number is in correct format
 		}
 		else {
@@ -210,7 +210,11 @@ public class LibraryController {
     	bor.setCardno(newCardNo_String);    	
     	borrowerService.insertBorrower(bor);
 		
-		return "home";
+    	model.addAttribute("borrower", bor);
+    	session.setAttribute("borrower", bor);
+    	errormsg = "Your Card Number is: " + newCardNo_String;
+    	model.addAttribute("errormsg", errormsg);
+		return "home_newuser";
     }
     
     @GetMapping("/login")
@@ -256,6 +260,10 @@ public class LibraryController {
 			
 	    	model.addAttribute("myLoans", fixedBooks);
 	    	session.setAttribute("myLoans", fixedBooks);
+	    	
+	    	if(fixedBooks.isEmpty()) {
+	    		return "home_newuser";
+	    	}
 	    	
 			return "home";
 		}
