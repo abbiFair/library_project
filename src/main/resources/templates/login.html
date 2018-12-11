@@ -7,28 +7,42 @@
 </head>
 
 <body>
-	<h1>Library Login</h1>
-	<form action="/validateLogin" method="POST">
-		<table class="prettytable">
-			<p th:text="${errormsg}"/>
-			<tr> 
-				<td> Card Number: </td>
-				<td> <input type="text" name="cardno" required/> </td>
-			</tr>
+	
+	<table >
+	
+		<tr>
+			<td> 
+			<h1>Library Login</h1>
+			<form action="/validateLogin" method="POST">
+			<table class="prettytable">
+				<p th:text="${errormsg}"/>
+				<tr> 
+					<td> Card Number: </td>
+					<td> <input type="text" name="cardno" required/> </td>
+				</tr>
 
-			<tr> 
-				<td> Password: </td>
-				<td> <input type="text" name="password" required/> </td>
-			</tr>
-		</table>
+				<tr> 
+					<td> Password: </td>
+					<td> <input type="password" name="password" required/> </td>
+				</tr>
+			</table>
 		
-		<table class="buttons">
-			<tr> 
-				<td> <input type="submit" value="Login"> </td>
-				<td> <input type="reset" value="Reset"> </td>
-			</tr>
-		</table>
-		<p><a href="register">New Borrower? Register Here</a></p>
-	</form>
+			<table class="buttons">
+				<tr> 
+					<td> <input type="submit" value="Login"> </td>
+					<td> <input type="reset" value="Reset"> </td>
+				</tr>
+			</table>
+			<p><a href="register">New Borrower? Register Here</a></p>
+
+			</form>
+			</td>
+			<td>
+				<img src="https://cdn.homedit.com/wp-content/uploads/2015/02/Classic-Home-Library-Design-Round-Stair.jpg" 
+				width="450" height="300"  alt="Library">
+			</td>	
+		</tr>
+	</table>
+	
 </body>
 </html>

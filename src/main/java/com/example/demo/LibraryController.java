@@ -153,7 +153,19 @@ public class LibraryController {
     	bor.setAddress(address);
     	bor.setPassword(password);    	
     	borrowerService.updateBorrower(bor);
-		
+    	
+		List<BookLoan> myLoans = new ArrayList<BookLoan>();
+    	myLoans = bookService.getBookLoanByCard(bor.getCardno());
+    	
+    	List<BookLoan> fixedBooks = new ArrayList<BookLoan>(); 
+		for(BookLoan book: myLoans) {
+			if(book.getRating() == null) {
+				book.setRating("Not Rated");
+			}
+			fixedBooks.add(book);
+		}
+		model.addAttribute("borrower", bor);
+    	model.addAttribute("myLoans", fixedBooks);
 		return "home";
     }
     
@@ -264,6 +276,9 @@ public class LibraryController {
     		model.addAttribute("borrower", bor);
     	    return "editBorrower";
     	}
+    	else if ("Logout".equals(action)) {
+    	    return "login";
+    	}
     	if("Profile".equals(action)) {
         	myLoans = bookService.getBookLoanByCard(bor.getCardno());
         	
@@ -346,6 +361,24 @@ public class LibraryController {
     		@ModelAttribute("branch") LibraryBranch branch, Model model, HttpSession session) {
     	// Update session object borrower to include the borrower's books that are being checked out
     	List<Book> checkoutbooks = borrower.getBooks();
+    	
+    	if(checkoutbooks.isEmpty()) {
+        	List<BookLoan> myLoans = new ArrayList<BookLoan>();
+        	myLoans = bookService.getBookLoanByCard(bor.getCardno());
+        	List<BookLoan> fixedBooks = new ArrayList<BookLoan>(); 
+    		for(BookLoan book: myLoans) {
+    			if(book.getRating() == null) {
+    				book.setRating("Not Rated");
+    			}
+    			fixedBooks.add(book);
+    		}
+        	
+        	model.addAttribute("myLoans", fixedBooks);
+        	session.setAttribute("myLoans", fixedBooks);
+        	model.addAttribute("borrower", bor);
+        	return "home";
+    	}
+    	
     	Borrower completedBorrower = bor;
     	completedBorrower.setBooks(checkoutbooks);
     	
@@ -405,10 +438,20 @@ public class LibraryController {
     		System.out.println("Book loan for" + book.getTitle() + " has been inserted.");
     	}
     	
+    	
+    	
     	List<BookLoan> myLoans = new ArrayList<BookLoan>();
     	myLoans = bookService.getBookLoanByCard(borrower.getCardno());
-    	model.addAttribute("myLoans", myLoans);
-    	session.setAttribute("myLoans", myLoans);
+    	List<BookLoan> fixedBooks = new ArrayList<BookLoan>(); 
+		for(BookLoan book: myLoans) {
+			if(book.getRating() == null) {
+				book.setRating("Not Rated");
+			}
+			fixedBooks.add(book);
+		}
+    	
+    	model.addAttribute("myLoans", fixedBooks);
+    	session.setAttribute("myLoans", fixedBooks);
     	model.addAttribute("borrower", borrower);
     	
     	return "home";
