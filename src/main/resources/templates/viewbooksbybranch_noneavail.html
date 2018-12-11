@@ -24,33 +24,6 @@
 	</form>
 
     <form th:action="@{/checkout(branch=${branch.branchid},borrower=${borrower.cardno})}" method="post" th:object="${borrower}">
-	    <table class = "prettytable">
-		    <tr>
-			    <th>Title</th>
-			    <th>Publisher</th>
-			    <th>Rating</th>
-			    <th>Number Available</th>
-			    <th>Check Out</th>
-		    </tr>
-		    
-		    <tr th:each="avail: ${availList}">
-		        <td th:text="${avail.title}" />
-		        <td th:text="${avail.publisher}" />
-		        <td th:text="${avail.rating}" />
-		        <td th:text="${avail.numberavailable}" />
-		        <td>
-		        	<input type="checkbox" th:field="*{books}" th:value="${avail.bookid}">
-	        	</td>
-		    </tr>
-	    </table>
-	    
-	    <table class="buttons">
-	    	<tr>
-		    	<td><input type="submit" value="Submit"></td>
-		    	<td><input type="reset" value="Reset"></td>
-	    	</tr>
-	    </table>
-		
 	   	<table class = "prettytable">
 		    <tr>
 			    <th>Title</th>
@@ -58,6 +31,7 @@
 			    <th>Rating</th>
 			    <th>Number Available</th>
 		    </tr>
+		    
 		    <tr th:each="unavail: ${unavailList}">
 		        <td th:text="${unavail.title}" />
 		        <td th:text="${unavail.publisher}" />
@@ -65,7 +39,6 @@
 		        <td th:text="${unavail.numberavailable}" />
 		    </tr>
 	    </table>
-	    
 	    <p><a href="home">Back to Home</a></p>
     </form>
 </body>

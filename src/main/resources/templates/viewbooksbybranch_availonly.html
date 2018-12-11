@@ -50,21 +50,6 @@
 		    	<td><input type="reset" value="Reset"></td>
 	    	</tr>
 	    </table>
-		
-	   	<table class = "prettytable">
-		    <tr>
-			    <th>Title</th>
-			    <th>Publisher</th>
-			    <th>Rating</th>
-			    <th>Number Available</th>
-		    </tr>
-		    <tr th:each="unavail: ${unavailList}">
-		        <td th:text="${unavail.title}" />
-		        <td th:text="${unavail.publisher}" />
-		        <td th:text="${unavail.rating}" />
-		        <td th:text="${unavail.numberavailable}" />
-		    </tr>
-	    </table>
 	    
 	    <p><a href="home">Back to Home</a></p>
     </form>

@@ -10,6 +10,7 @@
 <h1>Register a new borrower</h1>
 	<form action="/newBorrower" method="POST">
 		<table class="prettytable">
+			<p th:text="${errormsg}"/>
 			<tr> 
 				<td> Name: </td>
 				<td> <input type="text" name="name" required/> </td>

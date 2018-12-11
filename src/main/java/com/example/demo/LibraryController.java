@@ -353,6 +353,16 @@ public class LibraryController {
         model.addAttribute("allBranches", allBranches);
         model.addAttribute("branch", branch);
     	
+        if(unavailList.isEmpty() && !availList.isEmpty()) {
+        	return "viewbooksbybranch_availonly";
+        }
+        else if(availList.isEmpty() && !unavailList.isEmpty()) {
+        	return "viewbooksbybranch_noneavail";
+        }
+        else if(availList.isEmpty() && unavailList.isEmpty()) {
+        	return "viewbooks";
+        }
+        
     	return "viewbooksbybranch";
     }
     
@@ -414,6 +424,13 @@ public class LibraryController {
         session.setAttribute("branch", branch);
     	model.addAttribute("borrower", bor);
     	
+    	if(verifiedBooks.isEmpty() && !duplicateBooks.isEmpty()) {
+    		return "checkout_novalidbooks";
+    	}
+    	else if(!verifiedBooks.isEmpty() && duplicateBooks.isEmpty()) {
+    		return "checkout_normallistonly";
+    	}
+    	
     	return "checkout";
     }
     
@@ -453,6 +470,7 @@ public class LibraryController {
     	model.addAttribute("myLoans", fixedBooks);
     	session.setAttribute("myLoans", fixedBooks);
     	model.addAttribute("borrower", borrower);
+    	
     	
     	return "home";
     }

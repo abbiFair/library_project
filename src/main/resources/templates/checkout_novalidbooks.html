@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Check Out</title>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/example.css" />
+</head>
+<body>
+    <h1>Check Out Books</h1>
+    
+    <form th:action="@{/confirmcheckout}" method="post" th:object="${verifiedbooks}">
+	    
+	    <table>
+		    <tr>
+			    <td>The following books have already been checked out by you and will not be checked out at this time:</td>
+		    </tr>
+	    </table>
+	    
+	    <table class = "prettytable">
+		    <tr>
+			    <th>Title</th>
+			    <th>Publisher</th>
+			    <th>Library Branch</th>
+		    </tr>
+		    
+		    <tr th:each="book: ${duplicatebooks}">
+		        <td th:text="${book.title}" />
+		        <td th:text="${book.publisher}" />
+		        <td th:text="${branch.branchname}" />
+		    </tr>
+	    </table>
+	    
+	    <table  class="buttons">
+		    <tr>
+		    	<td> <input type="submit" name="action" value="Confirm"></td>
+				<td> <input type="submit" name="action" value="Cancel"> </td>
+	    	</tr>
+    	</table>
+    </form>
+</body>
+</html>
